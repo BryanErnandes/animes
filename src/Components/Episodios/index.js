@@ -3,11 +3,11 @@ import React from "react";
 
 import { Container, Banner, Title, ContainerTitle } from "./styles";
 
-export default function SliderAnimes({data}) {
+export default function Episodios({data}) {
     return(
         <Container>
             <Banner
-            resizeMode ="cover"
+            resizeMode ="stretch"
             source={{
                 uri: `${data.images.jpg.image_url}`,
             }} />

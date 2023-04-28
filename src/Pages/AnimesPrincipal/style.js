@@ -2,8 +2,7 @@ import styled from 'styled-components/native'
 
 export const Container = styled.View`
 flex: 1
-background: rgba(0, 0, 0, 0.83)
-
+background: rgba(99, 40, 200, 0.8)
 `;
 
 
@@ -16,6 +15,17 @@ width: 100%;
 
 export const BannerBotao = styled.TouchableOpacity``;
 
+
+export const ContainerTitle = styled.View`
+z-index: 99;
+position: absolute;
+top:69px
+padding-left: 100xp;`;
+
+export const TitleBanner = styled.Text`
+padding-left: 100xp;
+font-size: 30px`;
+
 export const Title = styled.Text`
 font-size: 22px;
 font-weight: bold;
@@ -25,7 +35,7 @@ left: 5px;
 color: #fff`;
 
 export const Banner = styled.Image`
-height: 500px;
+height: 510px;
 width: 100%;
 
 `;

@@ -3,16 +3,16 @@ import { View, Text } from "react-native";
 
 import { Container, Banner, Title, ContainerTitle } from "./styles";
 
-export default function SliderLancamentos() {
+export default function SliderLancamentos({data}) {
     return(
         <Container>
             <Banner
             resizeMode ="cover"
             source={{
-                uri: 'https://anime.atsit.in/wp-content/uploads/2023/04/autor-de-oshi-no-ko-lanca-conto-que-inspirou-a-musica-de-abertura-do-anime.jpg',
+                uri: `${data.images.jpg.image_url}`,
             }} />
             <ContainerTitle>
-                <Title numberOfLines={1}>oshi no ko</Title>
+                <Title  numberOfLines={1}>{data.title}</Title>
             </ContainerTitle>
              
         </Container>
