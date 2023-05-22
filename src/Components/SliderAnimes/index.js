@@ -3,9 +3,9 @@ import React from "react";
 
 import { Container, Banner, Title, ContainerTitle } from "./styles";
 
-export default function SliderAnimes({data}) {
+export default function SliderAnimes({data, navigatePagina}) {
     return(
-        <Container>
+        <Container activeOpacity={0.9} onPress={() => navigatePagina()}>
             <Banner
             resizeMode ="cover"
             source={{

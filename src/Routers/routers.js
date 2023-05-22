@@ -4,8 +4,9 @@ import {createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 
 import AnimesPrincipal from "../Pages/AnimesPrincipal";
-
-import AnimesDetalhes from "../Pages/AnimesDetalhes";
+import AnimesLogin from "../Pages/AnimesLogin";
+import AnimesDetalhes from "../Pages/AnimesDetalhes"
+import MangasDetalhes from "../Pages/MangaDetalhes"
 
 const Tab = createBottomTabNavigator()
 
@@ -14,7 +15,7 @@ function Marvel() {
     return(
         <Tab.Navigator>
             <Tab.Screen name="Principal" component={AnimesPrincipal} options={{ headerShown: false }}/>
-            <Tab.Screen name="Detalhes" component={AnimesDetalhes} options={{ headerShown: false }}/>
+            <Tab.Screen name="Login" component={AnimesLogin} options={{ headerShown: false }}/>
         </Tab.Navigator>
     )
 }
@@ -26,6 +27,8 @@ export default function MarvelRoutes() {
         <Stack.Navigator>
             <Stack.Screen name="Pag1" component={Marvel} options={{ headerShown: false }}/>
             <Stack.Screen name="Pag2" component={Marvel} options={{ headerShown: false }}/>
+            <Stack.Screen name="AnimesDetalhes" component={AnimesDetalhes} options={{headerShown: false}}/>
+            <Stack.Screen name="MangasDetalhes" component={MangasDetalhes} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }

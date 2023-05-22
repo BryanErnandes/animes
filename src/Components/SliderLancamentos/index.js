@@ -3,9 +3,9 @@ import { View, Text } from "react-native";
 
 import { Container, Banner, Title, ContainerTitle } from "./styles";
 
-export default function SliderLancamentos({data}) {
+export default function SliderLancamentos({data, navigatePagina}) {
     return(
-        <Container>
+        <Container activeOpacity={0.9} onPress={() => navigatePagina()}>
             <Banner
             resizeMode ="cover"
             source={{

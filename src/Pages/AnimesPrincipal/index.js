@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { ScrollView, Text } from "react-native";
 
-import { Container, Topo, BannerBotao, Title, TitleBanner, ContainerTitle, Banner, SliderLancamento, SlideAnime } from "./style"
+import { Container, Topo, BannerBotao, Title, TitleBanner, ListGenres, ContainerTitle, Banner, SliderLancamento, SlideAnime } from "./style"
 
 import api from "../../services/api"
 import { getListAnimes, randomBanner } from '../../Utils/animes'
@@ -10,7 +10,9 @@ import { getListAnimes, randomBanner } from '../../Utils/animes'
 import HeaderAnimes from "../../Components/HeaderAnimes";
 import SliderLancamentos from "../../Components/SliderLancamentos";
 import SliderAnimes from "../../Components/SliderAnimes";
-import Episodios from "../../Components/Episodios"
+import Generos from "../../Components/Genres"
+
+import {useNavigation} from "@react-navigation/native"
 
 
 export default function AnimesPrincipal() {
@@ -24,9 +26,12 @@ export default function AnimesPrincipal() {
 
     const [animeBanner, setAnimeBanner] = useState({})
 
+    const navigation = useNavigation();
+
 
     useEffect(() => {
         let isActive = true
+        const ac = new AbortController();
 
         async function getAnimes() {
             //const response = await api.get('/seasons/now')
@@ -34,7 +39,7 @@ export default function AnimesPrincipal() {
             const [nowSeason, recommendations, mangas, topAnime, topManga] = await Promise.all([
                 api.get('/seasons/now'),
 
-                api.get('recommendations/anime'),
+                api.get('/recommendations/anime'),
 
                 api.get('/manga'),
 
@@ -51,7 +56,7 @@ export default function AnimesPrincipal() {
                 const listSeason = getListAnimes(20, nowSeason.data.data)
                 //const listEpisodes = getListAnimes(20, episodes.data)
                 const listRecommendations = getListAnimes(10, recommendations.data.data)
-                const listManga = getListAnimes(10, mangas.data.data)
+                const listManga = getListAnimes(20, mangas.data.data)
                 const listTopAnime = getListAnimes(10, topAnime.data.data)
                 const listTopManga = getListAnimes(10, topManga.data.data)
 
@@ -70,7 +75,26 @@ export default function AnimesPrincipal() {
         }
 
         getAnimes();
+
+        return () => {
+            isActive = false
+            ac.abort()
+        }
     }, [])
+
+    function DetalhesPagina(item) {
+
+        navigation.navigate("AnimesDetalhes", {mal_id: item.mal_id})
+        console.log(item.mal_id)
+    }
+
+    function MangasDetalhes(item) {
+
+        navigation.navigate("MangasDetalhes", {mal_id: item.mal_id})
+        console.log(item.mal_id)
+    }
+
+    
     return (
         <Container>
 
@@ -80,37 +104,44 @@ export default function AnimesPrincipal() {
             </Topo>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                <BannerBotao activeOpacity={0.9} onPress={() => alert("teste")}>
+                <BannerBotao activeOpacity={0.9} onPress={() => DetalhesPagina(animeBanner)}>
 
-                    <ContainerTitle>
-                        <TitleBanner>{animeBanner.title}</TitleBanner>
-                    </ContainerTitle>
                     <Banner
-                        resizeMode="stretch"
+                        resizeMode="cover"
                         source={{
-                            uri: 'https://anime.atsit.in/wp-content/uploads/2023/04/autor-de-oshi-no-ko-lanca-conto-que-inspirou-a-musica-de-abertura-do-anime.jpg',
+                            uri: `${animeBanner.images.jpg.image_url}`,
                         }} />
+                    <ContainerTitle>
+                        <TitleBanner numberOfLines={1}>{animeBanner.title}</TitleBanner>
+                        <ListGenres
+                            data={animeBanner?.genres}
+                            showsVerticalScrollIndicator={false}
+                            horizontal={false}
+                            numColumns={3}
+                            keyExtractor={(item) => String(item.mal_id)}
+                            renderItem={({ item }) => <Generos data={item} navigatePagina={() => DetalhesPagina(item)} />}
+                        />
+                    </ContainerTitle>
                 </BannerBotao>
 
-                <Title>Temporada {nowSeason.season}</Title>
+                <Title>Temporada atual</Title>
 
                 <SliderLancamento
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={nowSeason}
-                    renderItem={({ item }) => <SliderLancamentos data={item} />}
+                    renderItem={({ item }) => <SliderLancamentos data={item} navigatePagina={() => DetalhesPagina(item)} />}
                     keyExtractor={(item) => String(item.mal_id)}
                 />
-                <Title>Recomendados</Title>
+                {/*<Title>Recomendados</Title>
 
                 <SlideAnime
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    data={nowSeason}
+                    data={recommendations}
                     renderItem={({ item }) => <Episodios data={item} />}
                     keyExtractor={(item) => String(item.mal_id)}
                 />
-
                 {/*<Title>Episodios</Title>
 
                 <SlideAnime
@@ -121,17 +152,14 @@ export default function AnimesPrincipal() {
 
 
                     />*/}
-                <Title>Mangas</Title>
+                <Title>Mangás</Title>
 
                 <SlideAnime
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={mangas}
-                    renderItem={({ item }) => <SliderAnimes data={item}
-                        keyExtractor={(item) => String(item.mal_id)}
-                    />}
-
-
+                    renderItem={({ item }) => <SliderAnimes data={item} navigatePagina={() => MangasDetalhes(item)} />}
+                    keyExtractor={(item) => String(item.mal_id)}
                 />
 
                 <Title>Animes Populares</Title>
@@ -140,25 +168,19 @@ export default function AnimesPrincipal() {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={topAnime}
-                    renderItem={({ item }) => <SliderAnimes data={item}
-                        keyExtractor={(item) => String(item.mal_id)}
-                    />}
-
-
+                    renderItem={({ item }) => <SliderAnimes data={item} navigatePagina={() => DetalhesPagina(item)} />}
+                    keyExtractor={(item) => String(item.mal_id)}
                 />
 
 
-                <Title>Mangas Populares</Title>
+                <Title>Mangás Populares</Title>
 
                 <SlideAnime
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={topManga}
-                    renderItem={({ item }) => <SliderAnimes data={item}
-                        keyExtractor={(item) => String(item.mal_id)}
-                    />}
-
-
+                    renderItem={({ item }) => <SliderAnimes data={item} navigatePagina={() => MangasDetalhes(item)} />}
+                    keyExtractor={(item) => String(item.mal_id)}
                 />
 
 
