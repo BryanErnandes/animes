@@ -12,10 +12,11 @@ import SliderLancamentos from "../../Components/SliderLancamentos";
 import SliderAnimes from "../../Components/SliderAnimes";
 import Generos from "../../Components/Genres"
 
-import {useNavigation} from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 
 
 export default function AnimesPrincipal() {
+
 
     const [nowSeason, setNowSeason] = useState([])
     // [episodes, setEpisodes] = useState([])
@@ -24,7 +25,11 @@ export default function AnimesPrincipal() {
     const [topAnime, setTopAnime] = useState([])
     const [topManga, setTopManga] = useState([])
 
-    const [animeBanner, setAnimeBanner] = useState({})
+    const [animeBanner, setAnimeBanner] = useState({
+        mal_id: "",
+        title: "",
+        images: { jpg: { image_url: "" } }
+    });
 
     const navigation = useNavigation();
 
@@ -36,17 +41,11 @@ export default function AnimesPrincipal() {
         async function getAnimes() {
             //const response = await api.get('/seasons/now')
 
-            const [nowSeason, recommendations, mangas, topAnime, topManga] = await Promise.all([
-                api.get('/seasons/now'),
-
-                api.get('/recommendations/anime'),
-
-                api.get('/manga'),
-
-                api.get('/top/anime'),
-
-                api.get('/top/manga'),
-            ])
+            const nowSeason = await api.get('/seasons/now')
+            const recommendations = await api.get('/recommendations/anime')
+            const mangas = await api.get('/manga')
+            const topAnime = await api.get('/top/anime')
+            const topManga = await api.get('/top/manga')
 
             //console.log(recommendations.data)
             //setNowSeason(nowSeason.data)
@@ -84,26 +83,24 @@ export default function AnimesPrincipal() {
 
     function DetalhesPagina(item) {
 
-        navigation.navigate("AnimesDetalhes", {mal_id: item.mal_id})
+        navigation.navigate("AnimesDetalhes", { mal_id: item.mal_id })
         console.log(item.mal_id)
     }
 
     function MangasDetalhes(item) {
 
-        navigation.navigate("MangasDetalhes", {mal_id: item.mal_id})
+        navigation.navigate("MangasDetalhes", { mal_id: item.mal_id })
         console.log(item.mal_id)
     }
 
-    
+
     return (
         <Container>
 
-
-            <Topo>
-                <HeaderAnimes />
-            </Topo>
-
             <ScrollView showsVerticalScrollIndicator={false}>
+                <Topo>
+                    <HeaderAnimes />
+                </Topo>
                 <BannerBotao activeOpacity={0.9} onPress={() => DetalhesPagina(animeBanner)}>
 
                     <Banner
@@ -117,7 +114,7 @@ export default function AnimesPrincipal() {
                             data={animeBanner?.genres}
                             showsVerticalScrollIndicator={false}
                             horizontal={false}
-                            numColumns={3}
+                            numColumns={5}
                             keyExtractor={(item) => String(item.mal_id)}
                             renderItem={({ item }) => <Generos data={item} navigatePagina={() => DetalhesPagina(item)} />}
                         />
@@ -182,14 +179,7 @@ export default function AnimesPrincipal() {
                     renderItem={({ item }) => <SliderAnimes data={item} navigatePagina={() => MangasDetalhes(item)} />}
                     keyExtractor={(item) => String(item.mal_id)}
                 />
-
-
             </ScrollView>
-
-
-
-
         </Container>
-
     )
 }

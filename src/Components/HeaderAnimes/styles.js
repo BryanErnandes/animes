@@ -26,5 +26,4 @@ export const Title = styled.Text`
 font-size: 30px;
 color: #FF1B00;
 font-weight: bold;
-
 `;
