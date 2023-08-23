@@ -4,13 +4,10 @@ import { Container, Perfil , Title, Botao } from "./styles";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import {useNavigation} from '@react-navigation/native'
 
-export default function HeaderAnimes() {
+export default function HeaderAnimes({title}) {
     return(
     <Container>
-            <Title>Animes Lista</Title>
-            <Botao>
-                <AntDesign name="user" size={29} color="#EB5546" />
-            </Botao>
+            <Title>{title}</Title>
        
 
     </Container>

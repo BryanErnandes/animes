@@ -1,98 +1,93 @@
 import { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { getListAnimes } from "../../Utils/animes";
 
 
-//import { ScrollView, ActivityIndicator, SafeAreaView, StyleSheet, View, Text } from 'react-native'
-import { Container, ContainerBanner, Topo, Botao, ImageBackground, Titulo, Title, ListGenre, CharacterContainer, CharactersTitle, CharacterView, CharactersView, BannerView, CharactersBanner, CharactersName, EpisodeContainer, EpisodesTitle, EpisodesView, BannerEpisode, EpisodeBanner, EpisodeNum, EpisodeName, Descricao, Note, Nota, Sinopse, Popularity, Members, Favorites, Rank, Nota1, Rank2, Popularity3, Members4, Favorites5, Theme, ThemeView, ThemeText, ThemeTitle } from "./styles";
-import { Modal, Pressable, ScrollView, Text, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { Container, Topo, Botao, ContainerBanner, ImageBackground, Note, Nota, Nota1, Rank, Rank2, Popularity, Popularity3, Members, Members4, Favorites, Favorites5, TitleView, Title, ListGenre, CharacterContainer, BotaoChar, BotaoVol, CharactersTitle, CharacterView, CharactersView, BannerView, CharactersBanner, CharactersName, VolumeContainer, VolumeTitle, VolumeView, BannerVolume, VolumeBanner, Descricao, Sinopse } from "./styles";
+
+import { FlatList, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+
+
 import Entypo from 'react-native-vector-icons/Entypo';
+import HeaderAnimes from '../../Components/HeaderAnimes'
+import { getListAnimes } from "../../Utils/animes";
+import api from "../../services/api";
+import MangaDetails from "../../Components/MangaDetails";
+import Information from "../../Components/information";
 
-import HeaderAnimes from "../../Components/HeaderAnimes";
-import DetailsGenres from "../../Components/DetailGenre/Index";
-import Information from "../../Components/information"
-//import OpenMusic from "../../Components/OpenMusic"
-import api from '../../services/api';
 
-
-export default function AnimesDetalhes() {
-
+export default function MangasDetalhes() {
 
     const navigation = useNavigation();
     const route = useRoute();
 
-    const [banner, setBanner] = useState({
-        mal_id: "",
-        title: "",
-        images: { jpg: { image_url: "" } }
-    });
 
-    const [video, setVideo] = useState([])
-
-    const [characters, SetCharacters] = useState([]);
-    //const [episodes, setEpisodes] = useState([])
-    const [anime, setAnime] = useState({});
-    const [theme, setTheme] = useState({});
     const [modalVisible, setModalVisible] = useState(false);
 
-    useEffect(() => {
+    const [manga, setManga] = useState({});
+    const [banner, setBanner] = useState({
+        mal_id: '',
+        title: '',
+        images: { jpg: { image_url: '' } }
+    });
+    const [characters, setCharacters] = useState([]);
+    const [picture, setPicture] = useState([])
 
+    useEffect(() => {
         let isActive = true
 
+        async function loadManga() {
 
-        async function loadAnime() {
-
-            const anime1 = await api.get(`/anime/${route.params?.mal_id}`,)
+            const manga = await api.get(`/manga/${route.params?.mal_id}`,)
                 .catch((err) => {
                     console.log(err)
                 })
 
-            const theme1 = await api.get(`/anime/${route.params?.mal_id}/themes`,)
+            const character1 = await api.get(`/manga/${route.params?.mal_id}/characters`,)
                 .catch((err) => {
                     console.log(err)
                 })
 
-            const character1 = await api.get(`/anime/${route.params?.mal_id}/characters`,)
+            const pictures = await api.get(`/manga/${route.params?.mal_id}/pictures`)
                 .catch((err) => {
                     console.log(err)
                 })
-
-            const video1 = await api.get(`/anime/${route.params?.mal_id}/videos/episodes`,)
-                .catch((err) => {
-                    console.log(err)
-                })
-
 
             if (isActive) {
-                const listCharacter = getListAnimes(8, character1.data.data)
 
-
-                setAnime(anime1.data.data);
-                setBanner(anime1.data.data);
-                setTheme(theme1.data.data);
-                setVideo(video1.data.data);
-                SetCharacters( character1.data.data);
-                console.log(anime1.data)
+                setManga(manga.data.data)
+                setBanner(manga.data.data)
+                setCharacters(character1.data.data);
+                setPicture(pictures.data.data)
+                console.log(manga.data)
             }
-
         }
 
         if (isActive) {
-
-            loadAnime();
+            loadManga();
         }
         return () => {
             isActive = false
         }
     }, [])
 
-    return (
+    {/*function PersonagensManga(item) {
 
+        navigation.navigate("PersonagensMangas", { mal_id: item.mal_id })
+        console.log(item.mal_id)
+    }
+
+    function Personagem(item) {
+
+        navigation.navigate("Personagem", { mal_id: item.mal_id })
+        console.log(item.mal_id)
+    }*/}
+
+    return (
         <Container>
             <ScrollView>
                 <Topo>
-                    <HeaderAnimes title="Detalhes Anime" />
-                    <Botao>
+                    <HeaderAnimes title='Detalhes Manga' />
+                    <Botao activeOpacity={0.70}>
                         <Entypo name="heart-outlined" size={39} color="#EB5546" />
                     </Botao>
                 </Topo>
@@ -102,74 +97,71 @@ export default function AnimesDetalhes() {
                         source={{
                             uri: `${banner.images.jpg.image_url}`,
                         }} />
-
                     <Note>
-                        <Nota>Score</Nota>
-                        <Nota1>{anime.score}</Nota1>
-                        <Rank>Rank</Rank>
-                        <Rank2>{anime.rank} </Rank2>
+                        <Nota>Rank</Nota>
+                        <Nota1>{manga.score}</Nota1>
+                        <Rank>Popularity</Rank>
+                        <Rank2>{manga.rank}</Rank2>
                         <Popularity>Popularity</Popularity>
-                        <Popularity3>{anime.popularity}</Popularity3>
+                        <Popularity3>{manga.popularity}</Popularity3>
                         <Members>Members</Members>
-                        <Members4>{anime.members}</Members4>
+                        <Members4>{manga.members}</Members4>
                         <Favorites>Favorites</Favorites>
-                        <Favorites5>{anime.favorites}</Favorites5>
+                        <Favorites5>{manga.favorites}</Favorites5>
                     </Note>
                 </ContainerBanner>
-                <Titulo>
-                    <Title numberOfLines={2}>{anime.title}</Title>
+                <TitleView style={styles.shadow}>
+                    <Title>{manga.title}</Title>
                     <ListGenre
-                        data={anime?.genres}
+                        data={manga?.genres}
                         showsVerticalScrollIndicator={false}
                         horizontal={false}
-                        numColumns={4}
+                        numColumns={3}
                         keyExtractor={(item) => String(item.mal_id)}
-                        renderItem={({ item }) => <DetailsGenres data={item} />}
-                    />
-                </Titulo>
+                        renderItem={({ item }) => <MangaDetails data={item} />} />
+                </TitleView>
+
                 <CharacterContainer >
-                    <CharactersTitle>Personagens</CharactersTitle>
+                        <CharactersTitle>Personagens</CharactersTitle>
                     <CharacterView>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {characters?.map((character, index) => {
-                                const { images, name, voice_actors, mal_id } = character.character
+
+                                const { images, name, mal_id } = character.character
                                 return <CharactersView style={styles.shadow} to={`/character/${mal_id}`} key={index}>
                                     <BannerView>
-                                        <CharactersBanner
-                                            resizeMode="cover"
-                                            src={images?.jpg.image_url} />
-                                        <View>
-                                            <CharactersName>{name}</CharactersName>
-                                        </View>
-
+                                        <BotaoChar activeOpacity={0.70} onPress={() => navigation.navigate('Personagem', `${character.mal_id}`)}>
+                                            <CharactersBanner
+                                                resizeMode="cover"
+                                                src={images?.jpg.image_url} />
+                                            <View>
+                                                <CharactersName>{name}</CharactersName>
+                                            </View>
+                                        </BotaoChar>
                                     </BannerView>
                                 </CharactersView>
                             })}
                         </ScrollView>
                     </CharacterView>
-                        </CharacterContainer>
+                </CharacterContainer>
 
-                <EpisodeContainer >
-                    <EpisodesTitle>Episodios</EpisodesTitle>
-                    <EpisodesView >
+                <VolumeContainer >
+                    <VolumeTitle>Fotos</VolumeTitle>
+
+                    <VolumeView >
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {video.map(videos => (
-                                <BannerEpisode style={styles.episodeShadow} key={videos.mal_id}>
-                                    <EpisodeBanner
+                            {picture.map(pictures => (
+                                <BannerVolume style={styles.episodeShadow} key={pictures.mal_id}>
+                                    <VolumeBanner
                                         resizeMode="stretch"
-                                        src={videos.images.jpg.image_url} />
-                                    <View>
-                                        <EpisodeName numberOfLines={1}>{videos.title}</EpisodeName>
-                                        <EpisodeNum>{videos.episode}</EpisodeNum>
-                                    </View>
+                                        src={pictures.jpg.image_url} />
 
-                                </BannerEpisode>
+                                </BannerVolume>
                             ))}
                         </ScrollView>
 
-                    </EpisodesView>
-                            </EpisodeContainer>
-
+                    </VolumeView>
+                </VolumeContainer>
 
                 <View style={styles.centeredView}>
                     <Modal
@@ -181,36 +173,47 @@ export default function AnimesDetalhes() {
                         }}>
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Tipo: {anime.type}</Text>
-                                <Text style={styles.modalText}>Episodios: {anime.episodes}</Text>
-                                <Text style={styles.modalText}>Duração: {anime.duration}</Text>
-                                <Text style={styles.modalText}>Transmissão: {anime.season} {anime.year}</Text>
-                                <Text style={styles.modalText}>Status: {anime.status}</Text>
-                                <Text style={styles.modalText}>Avaliação: {anime.rating}</Text>
-                                <Text style={styles.modalText}>Fonte: {anime.source}</Text>
+                                <Text style={styles.modalText}>Tipo: {manga.type}</Text>
+                                <Text style={styles.modalText}>Capitulos: {manga.chapters}</Text>
+                                <Text style={styles.modalText}>Volumes: {manga.volumes}</Text>
+                                <Text style={styles.modalText}>Status: {manga.status}</Text>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.flatListText}>Estudio:</Text>
+                                    <Text style={styles.modalText}>Serializações: </Text>
                                     <FlatList
-                                        data={anime?.studios}
+                                        data={manga?.serializations}
                                         showsVerticalScrollIndicator={false}
                                         keyExtractor={(item) => String(item.mal_id)}
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.flatListText}>Demografia:</Text>
+                                    <Text style={styles.modalText}>Autor: </Text>
                                     <FlatList
-                                        data={anime?.demographics}
+                                        data={manga?.authors}
                                         showsVerticalScrollIndicator={false}
                                         keyExtractor={(item) => String(item.mal_id)}
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.flatListText}>Temas:</Text>
+                                    <Text style={styles.modalText}>Gêneros Explícitos: </Text>
                                     <FlatList
-                                        data={anime?.themes}
+                                        data={manga?.explicit_genres}
                                         showsVerticalScrollIndicator={false}
-                                        horizontal={false}
-                                        numColumns={3}
+                                        keyExtractor={(item) => String(item.mal_id)}
+                                        renderItem={({ item }) => <Information data={item} />} />
+                                </View>
+                                <View style={styles.flatList}>
+                                    <Text style={styles.modalText}>Temas: </Text>
+                                    <FlatList
+                                        data={manga?.themes}
+                                        showsVerticalScrollIndicator={false}
+                                        keyExtractor={(item) => String(item.mal_id)}
+                                        renderItem={({ item }) => <Information data={item} />} />
+                                </View>
+                                <View style={styles.flatList}>
+                                    <Text style={styles.modalText}>Demografia: </Text>
+                                    <FlatList
+                                        data={manga?.demographics}
+                                        showsVerticalScrollIndicator={false}
                                         keyExtractor={(item) => String(item.mal_id)}
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
@@ -231,30 +234,22 @@ export default function AnimesDetalhes() {
                 </View>
 
                 <Descricao>
-                    <Sinopse>
-                        {anime.synopsis}
-                    </Sinopse>
+                    <Sinopse>{manga.synopsis}</Sinopse>
                 </Descricao>
-
-                <Theme>
-                    <ThemeView style={styles.ThemeShadow}>
-                        <ThemeTitle>Openings:</ThemeTitle>
-                        <ThemeText>{theme.openings}</ThemeText>
-
-                        <ThemeTitle>Endings:</ThemeTitle>
-                        <ThemeText>{theme.endings}</ThemeText>
-                    </ThemeView>
-
-
-                </Theme>
-
-
             </ScrollView>
         </Container>
     )
 }
 
 const styles = StyleSheet.create({
+    flatListText: {
+        color: "#fff",
+        fontSize: 21,
+        fontWeight: 'bold',
+        marginEnd: 10,
+        marginStart: 21
+    },
+
     shadow: {
         shadowColor: "rgba(0, 0, 0, 1)",
         shadowOffset: {
@@ -266,6 +261,7 @@ const styles = StyleSheet.create({
 
         elevation: 6,
     },
+
     episodeShadow: {
         shadowColor: "rgba(0, 0, 0, 1)",
         shadowOffset: {
@@ -277,17 +273,7 @@ const styles = StyleSheet.create({
 
         elevation: 9,
     },
-    ThemeShadow: {
-        shadowColor: "rgba(0, 0, 0, 1)",
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.34,
-        shadowRadius: 6.27,
 
-        elevation: 6,
-    },
     centeredView: {
         flex: 1,
         marginEnd: 10,
@@ -403,4 +389,4 @@ const styles = StyleSheet.create({
         marginEnd: 90,
         marginStart: 90,
     }
-});
+})

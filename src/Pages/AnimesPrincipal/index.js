@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { ScrollView, Text } from "react-native";
 
-import { Container, Topo, BannerBotao, Title, TitleBanner, ListGenres, ContainerTitle, Banner, SliderLancamento, SlideAnime } from "./style"
+import { Container, Topo, Botao, BannerBotao, Title, TitleBanner, ListGenres, ContainerTitle, Banner, SliderLancamento, SlideAnime, ContainerBanner } from "./style"
 
 import api from "../../services/api"
 import { getListAnimes, randomBanner } from '../../Utils/animes'
@@ -11,6 +11,7 @@ import HeaderAnimes from "../../Components/HeaderAnimes";
 import SliderLancamentos from "../../Components/SliderLancamentos";
 import SliderAnimes from "../../Components/SliderAnimes";
 import Generos from "../../Components/Genres"
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 import { useNavigation } from "@react-navigation/native"
 
@@ -98,27 +99,35 @@ export default function AnimesPrincipal() {
         <Container>
 
             <ScrollView showsVerticalScrollIndicator={false}>
+                
                 <Topo>
-                    <HeaderAnimes />
+                    <HeaderAnimes title="Animes Lista" />
+                    <Botao>
+                        <AntDesign name="user" size={29} color="#EB5546" />
+                    </Botao>
                 </Topo>
-                <BannerBotao activeOpacity={0.9} onPress={() => DetalhesPagina(animeBanner)}>
 
-                    <Banner
-                        resizeMode="cover"
-                        source={{
-                            uri: `${animeBanner.images.jpg.image_url}`,
-                        }} />
-                    <ContainerTitle>
-                        <TitleBanner numberOfLines={1}>{animeBanner.title}</TitleBanner>
-                        <ListGenres
-                            data={animeBanner?.genres}
-                            showsVerticalScrollIndicator={false}
-                            horizontal={false}
-                            numColumns={5}
-                            keyExtractor={(item) => String(item.mal_id)}
-                            renderItem={({ item }) => <Generos data={item} navigatePagina={() => DetalhesPagina(item)} />}
-                        />
-                    </ContainerTitle>
+                <BannerBotao activeOpacity={0.9} onPress={() => DetalhesPagina(animeBanner)}>
+                    <ContainerBanner>
+                        <Banner
+                            resizeMode="stretch"
+                            source={{
+                                uri: `${animeBanner.images.jpg.image_url}`,
+                            }} />
+                        <ContainerTitle>
+                            <TitleBanner numberOfLines={1}>{animeBanner.title}</TitleBanner>
+                            <ListGenres
+                                data={animeBanner?.genres}
+                                showsVerticalScrollIndicator={false}
+                                horizontal={false}
+                                numColumns={5}
+                                keyExtractor={(item) => String(item.mal_id)}
+                                renderItem={({ item }) => <Generos data={item} navigatePagina={() => DetalhesPagina(item)} />}
+                            />
+                        </ContainerTitle>
+                    </ContainerBanner>
+
+
                 </BannerBotao>
 
                 <Title>Temporada atual</Title>
