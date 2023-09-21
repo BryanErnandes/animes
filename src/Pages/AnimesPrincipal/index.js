@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, useAnimatedValue, TextInput } from "react-native";
 
-import { Container, Topo, Botao, BannerBotao, Title, TitleBanner, ListGenres, ContainerTitle, Banner, SliderLancamento, SlideAnime, ContainerBanner } from "./style"
+import { Container, Topo, Seach, Input, Botao, BannerBotao, Title, TitleBanner, ListGenres, ContainerTitle, Banner, SliderLancamento, SlideAnime, ContainerBanner } from "./style"
 
 import api from "../../services/api"
 import { getListAnimes, randomBanner } from '../../Utils/animes'
@@ -11,9 +11,10 @@ import HeaderAnimes from "../../Components/HeaderAnimes";
 import SliderLancamentos from "../../Components/SliderLancamentos";
 import SliderAnimes from "../../Components/SliderAnimes";
 import Generos from "../../Components/Genres"
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
 
 import { useNavigation } from "@react-navigation/native"
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 
 export default function AnimesPrincipal() {
@@ -99,13 +100,20 @@ export default function AnimesPrincipal() {
         <Container>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                
+
                 <Topo>
                     <HeaderAnimes title="Animes Lista" />
-                    <Botao>
-                        <AntDesign name="user" size={29} color="#EB5546" />
-                    </Botao>
                 </Topo>
+
+                <Seach>
+                    <Input 
+                    placeholder="buscar..."
+                    placeholderTextColor='#fff'  />
+                    
+                    <Botao>
+                        <EvilIcons name="search" size={39} color="#fff" />
+                    </Botao>
+                </Seach>
 
                 <BannerBotao activeOpacity={0.9} onPress={() => DetalhesPagina(animeBanner)}>
                     <ContainerBanner>

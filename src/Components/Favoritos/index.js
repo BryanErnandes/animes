@@ -1,22 +1,24 @@
 import React from "react";
 
-import { View, Text } from "react-native";
+//import { View, Text } from "react-native";
 
-import { Container, ContainerFavoritos, ImageBackground, FavoritosText, Title } from './styles'
+import { Container, Botao, ContainerFavoritos, ImageBackground, FavoritosText, Title } from './styles'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Favoritos() {
+export default function Favoritos({data, deleteFavorito, navigatePag}) {
+    
 
     return (
         <Container>
-            <ContainerFavoritos>
+             <Botao activeOpacity={0.8} onPress={ () => deleteFavorito(data.mal_id)}>
+            <Ionicons name="trash-bin" size={21} color='#fff' />
+        </Botao>
+            <ContainerFavoritos activeOpacity={0.9} onPress={ () => navigatePag(data)}>
                 <ImageBackground
                     resizeMode="cover"
                     source={{
-                        uri: "https://static3.mangalivre.net/capas/5sW1GXOQtueQ7L6LYcAOkg/9712/62e6b4752d774_external_cover.jpg"
-                    }} />
-                <FavoritosText>
-                    <Title numberOfLines={1}>FDSFSDFDGG</Title>
-                </FavoritosText>
+                        uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    }}  />
             </ContainerFavoritos>
         </Container>
     )

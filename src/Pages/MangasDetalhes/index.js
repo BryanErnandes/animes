@@ -6,10 +6,11 @@ import { Container, Topo, Botao, ContainerBanner, ImageBackground, Note, Nota, N
 
 import { FlatList, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import {mangasFavoritosSalvo, hasFavoritoManga, deleteManga,} from '../../Utils/estoqueManga'
+
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import HeaderAnimes from '../../Components/HeaderAnimes'
-import { getListAnimes } from "../../Utils/animes";
 import api from "../../services/api";
 import MangaDetails from "../../Components/MangaDetails";
 import Information from "../../Components/information";
@@ -31,6 +32,8 @@ export default function MangasDetalhes() {
     });
     const [characters, setCharacters] = useState([]);
     const [picture, setPicture] = useState([])
+
+    const [favoritosMangas, setFavoritosMangas] = useState(false)
 
     useEffect(() => {
         let isActive = true
@@ -59,6 +62,9 @@ export default function MangasDetalhes() {
                 setCharacters(character1.data.data);
                 setPicture(pictures.data.data)
                 console.log(manga.data)
+
+                const isFavorito = await hasFavoritoManga(manga.data.data)
+                setFavoritosMangas(isFavorito)
             }
         }
 
@@ -82,14 +88,30 @@ export default function MangasDetalhes() {
         console.log(item.mal_id)
     }*/}
 
+    async function mangasFavoritos(manga) {
+        if (favoritosMangas) {
+            await deleteManga(manga.mal_id);
+            setFavoritosMangas(false);
+            //alert('manga removido');
+        }
+        else {
+            mangasFavoritosSalvo('@favoritoManga', manga)
+            setFavoritosMangas(true);
+        }
+    }
+
     return (
         <Container>
             <ScrollView>
                 <Topo>
                     <HeaderAnimes title='Detalhes Manga' />
-                    <Botao activeOpacity={0.70}>
-                        <Entypo name="heart-outlined" size={39} color="#EB5546" />
-                    </Botao>
+                    <Botao activeOpacity={0.8} onPress={() => mangasFavoritos(manga)}>
+                    {favoritosMangas ? (
+                        <Entypo name="heart" size={39} color='#FA3800' />
+                    ) : (
+                        <Entypo name="heart-outlined" size={39} color='#FA3800' />
+                    )}
+                </Botao>
                 </Topo>
                 <ContainerBanner>
                     <ImageBackground

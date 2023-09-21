@@ -4,7 +4,19 @@ export const Container = styled.View`
 flex: 1
 `;
 
-export const ContainerFavoritos = styled.View`
+export const Botao = styled.TouchableOpacity`
+width: 30px;
+height: 32px;
+z-index: 99;
+position: absolute;
+top: 10px;
+left: 120px;
+padding: 5px 5px;
+background: rgba(5, 10, 1, 0.60);
+border-radius: 10px;
+`;
+
+export const ContainerFavoritos = styled.TouchableOpacity`
 margin-top: 5px;
 padding: 0px 5px;
 height: 240px;

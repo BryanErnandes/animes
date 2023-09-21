@@ -14,7 +14,7 @@ padding: 0px 10px;
 margin: -4px 0px 0px 0px;
 `;
 
-export const Botao = styled.View`
+export const Botao = styled.TouchableOpacity`
 background-color: rgba(0, 0, 0, 0.83)
 flex-direction: row;
 align-items: center;
@@ -173,7 +173,7 @@ padding-start: 3px
 export const BannerView = styled.View`
 height: 295px;
 width: 130px;
-margin-top: 5px;
+margin-top: 18px;
 margin-left: 10px;
 margin-bottom: 10px;
 margin-right: 37px;
@@ -219,7 +219,7 @@ margin-top: 0px;
 margin-left: 5px;
 margin-bottom: 20px;
 margin-right: 5px;
-padding-top: 10px;
+padding-top: 0px;
 padding-end: 5px
 padding-start: 3px
 `;
@@ -232,7 +232,7 @@ margin-top: 0px;
 margin-left: 0px;
 margin-bottom: 10px;
 margin-right: 0px;
-padding-top: 5px;
+padding-top: 26px;
 padding-end: 15px
 padding-bottom: 0px
 padding-start: 15px

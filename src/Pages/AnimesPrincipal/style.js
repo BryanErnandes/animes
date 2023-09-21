@@ -2,25 +2,53 @@ import styled from 'styled-components/native'
 
 export const Container = styled.View`
 flex: 1
-background-color: rgba(0, 0, 0, 0.83)
+background-color: rgba(0, 0, 0, 1)
 `;
 
 
 export const Topo = styled.View`
-background-color: rgba(0, 0, 0, 0.83)
+background-color: rgba(0, 0, 0, 1)
 flex-direction: row;
 align-items: center;
-justify-content: space-between
-padding: 0px 10px;
-margin: -4px 0px 0px 0px;
+justify-content: center
+margin-top: 1px;
+margin-bottom: 0px
 
 `;
 
-export const Botao = styled.View`
-background-color: rgba(0, 0, 0, 0.83)
+export const Botao = styled.TouchableOpacity`
+width: 20%;
+height: 45px;
+padding-top: 3px;
+padding-left: 10px;
+background-color: #332F2E;
+border-top-right-radius: 7px;
+border-bottom-right-radius: 7px;
+
+`;
+
+export const Seach = styled.View`
 flex-direction: row;
-align-items: center;
-justify-content: space-between
+height: 40px;
+width: 100%;
+align-Items: center;
+padding: 0px 16px;
+margin-top: 0px;
+margin-bottom: 15px;
+;
+
+`;
+
+export const Input = styled.TextInput`
+background-color: #332F2E;
+height: 45px;
+width: 80%;
+padding: 10px 14px;
+color: "#fff";
+font-size: 19px;
+border-top-left-radius: 7px;
+border-bottom-left-radius: 7px;
+;
 
 `;
 export const BannerBotao = styled.TouchableOpacity`
@@ -28,14 +56,14 @@ export const BannerBotao = styled.TouchableOpacity`
 `;
 
 export const ContainerBanner = styled.View`
-height: 509px
+height: 456px
 `
 
 export const ContainerTitle = styled.View`
 background: rgba(0, 0, 0, 0.48)
 z-index: 99;
 position: absolute;
-top:455px
+top:410px
 left: 0px
 right: 0px
 justify-content: center;
@@ -63,7 +91,7 @@ left: 5px;
 color: #fff`;
 
 export const Banner = styled.Image`
-height: 505px;
+height: 459px;
 width: 100%;
 
 `;

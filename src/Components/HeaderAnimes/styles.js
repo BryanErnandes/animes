@@ -1,13 +1,12 @@
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
-background:rgba(0, 0, 0, 0.20)
-height: 65px;
+height: 50px;
 flex-direction: row;
 align-items: center;
-justify-content: space-between
+justify-content: center;
 padding: 0px 10px;
-margin: -4px 0px 0px 0px;
+margin: 0px 0px 9px 0px;
 
 
 `;
@@ -23,7 +22,7 @@ border-radius: 20px;
 
 
 export const Title = styled.Text`
-font-size: 30px;
-color: #FF1B00;
+font-size: 40px;
+color: #33C8A9;
 font-weight: bold;
 `;

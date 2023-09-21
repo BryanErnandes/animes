@@ -14,6 +14,8 @@ import Information from "../../Components/information"
 //import OpenMusic from "../../Components/OpenMusic"
 import api from '../../services/api';
 
+import { animesFavoritosSalvo, hasFavoritoAnime, deleteAnime, } from '../../Utils/estoqueAnime'
+
 
 export default function AnimesDetalhes() {
 
@@ -34,6 +36,7 @@ export default function AnimesDetalhes() {
     const [anime, setAnime] = useState({});
     const [theme, setTheme] = useState({});
     const [modalVisible, setModalVisible] = useState(false);
+    const [favoritosAnimes, setFavoritosAnimes] = useState(false);
 
     useEffect(() => {
 
@@ -64,15 +67,20 @@ export default function AnimesDetalhes() {
 
 
             if (isActive) {
-                const listCharacter = getListAnimes(8, character1.data.data)
+                // const listCharacter = getListAnimes(8, character1.data.data)
 
 
                 setAnime(anime1.data.data);
                 setBanner(anime1.data.data);
                 setTheme(theme1.data.data);
                 setVideo(video1.data.data);
-                SetCharacters( character1.data.data);
+                SetCharacters(character1.data.data);
                 console.log(anime1.data)
+
+                const isFavorito = await hasFavoritoAnime(anime1.data.data)
+                setFavoritosAnimes(isFavorito)
+
+
             }
 
         }
@@ -86,14 +94,33 @@ export default function AnimesDetalhes() {
         }
     }, [])
 
+    async function animesFavoritos(anime) {
+
+        if (favoritosAnimes) {
+            await deleteAnime(anime.mal_id);
+            setFavoritosAnimes(false);
+            //alert('anime removido');
+
+        }
+        else {
+            animesFavoritosSalvo('@favoritoAnime', anime)
+            setFavoritosAnimes(true);
+
+        }
+    }
+
     return (
 
         <Container>
             <ScrollView>
                 <Topo>
                     <HeaderAnimes title="Detalhes Anime" />
-                    <Botao>
-                        <Entypo name="heart-outlined" size={39} color="#EB5546" />
+                    <Botao activeOpacity={0.8} onPress={() => animesFavoritos(anime)}>
+                        {favoritosAnimes ? (
+                            <Entypo name="heart" size={39} color='#FA3800' />
+                        ) : (
+                            <Entypo name="heart-outlined" size={39} color='#FA3800' />
+                        )}
                     </Botao>
                 </Topo>
                 <ContainerBanner>
@@ -147,7 +174,7 @@ export default function AnimesDetalhes() {
                             })}
                         </ScrollView>
                     </CharacterView>
-                        </CharacterContainer>
+                </CharacterContainer>
 
                 <EpisodeContainer >
                     <EpisodesTitle>Episodios</EpisodesTitle>
@@ -168,7 +195,7 @@ export default function AnimesDetalhes() {
                         </ScrollView>
 
                     </EpisodesView>
-                            </EpisodeContainer>
+                </EpisodeContainer>
 
 
                 <View style={styles.centeredView}>
