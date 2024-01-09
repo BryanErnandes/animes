@@ -98,14 +98,14 @@ export default function AnimesLogin() {
                         Animes Favoritos
                     </AnimesText>
                     <AnimeView>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {anime.map(animes => (
                                 <AnimesView style={styles.shadow} key={animes.mal_id}>
                                     <Botao activeOpacity={0.8} onPress={() => hanledDelete(animes.mal_id)}>
                                         <Ionicons name="trash-bin" size={21} color='#fff' />
                                     </Botao>
                                     <ContainerFavoritos activeOpacity={0.9}>
-                                        <ImageBackground
+                                       <ImageBackground
                                             resizeMode="cover"
                                             source={{
                                                 uri: `${animes.images.jpg.image_url}`,

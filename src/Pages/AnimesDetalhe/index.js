@@ -143,7 +143,7 @@ export default function AnimesDetalhes() {
                         <Favorites5>{anime.favorites}</Favorites5>
                     </Note>
                 </ContainerBanner>
-                <Titulo>
+                <Titulo  style={styles.shadow}>
                     <Title numberOfLines={2}>{anime.title}</Title>
                     <ListGenre
                         data={anime?.genres}

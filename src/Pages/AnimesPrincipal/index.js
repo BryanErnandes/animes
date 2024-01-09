@@ -26,6 +26,7 @@ export default function AnimesPrincipal() {
     const [mangas, setMangas] = useState([])
     const [topAnime, setTopAnime] = useState([])
     const [topManga, setTopManga] = useState([])
+    const [inputValor, setInputValor] = useState([])
 
     const [animeBanner, setAnimeBanner] = useState({
         mal_id: "",
@@ -83,6 +84,14 @@ export default function AnimesPrincipal() {
         }
     }, [])
 
+    function BotaoSearch() {
+
+        if(!inputValor) return;
+        let input = inputValor;
+        setInputValor('');
+       navigation.navigate("Search", { name: input } )
+    }
+
     function DetalhesPagina(item) {
 
         navigation.navigate("AnimesDetalhes", { mal_id: item.mal_id })
@@ -107,10 +116,12 @@ export default function AnimesPrincipal() {
 
                 <Seach>
                     <Input 
-                    placeholder="buscar..."
-                    placeholderTextColor='#fff'  />
+                    placeholder="Buscar..."
+                    placeholderTextColor='#5C5C5C' 
+                    value={inputValor} 
+                    onChangeText={ (text) => setInputValor(text)}/>
                     
-                    <Botao>
+                    <Botao onPress={BotaoSearch}>
                         <EvilIcons name="search" size={39} color="#fff" />
                     </Botao>
                 </Seach>

@@ -44,7 +44,7 @@ background-color: #332F2E;
 height: 45px;
 width: 80%;
 padding: 10px 14px;
-color: "#fff";
+color: #fff;
 font-size: 19px;
 border-top-left-radius: 7px;
 border-bottom-left-radius: 7px;
