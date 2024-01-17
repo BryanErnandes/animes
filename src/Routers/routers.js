@@ -11,7 +11,7 @@ import MangasDetalhes from "../Pages/MangasDetalhes";
 import PersonagensMangas from "../Pages/PersonagensMangas";
 import Personagem from "../Pages/Personagem";
 import Search from "../Pages/Search";
-import AnimeFiltro from "../Pages/animeFiltro";
+import AnimeFiltro from "../Pages/AnimeFiltro";
 
 const Tab = createBottomTabNavigator()
 
@@ -21,7 +21,7 @@ function Manga() {
         <Tab.Navigator>
             <Tab.Screen name="Principal" component={AnimesPrincipal} options={{ headerShown: false }}/>
             <Tab.Screen name="Login" component={AnimesLogin} options={{ headerShown: false }}/>
-            <Tab.Screen name="Filtro" component={AnimeFiltro} options={{headerShown: false}} />
+            <Tab.Screen name="Generos" component={AnimeFiltro} options={{headerShown: false}} />
         </Tab.Navigator>
     )
 }
