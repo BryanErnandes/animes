@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 
 import { Container, Nome, FlatGenres, Titulo } from "./styles";
 
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import api from "../../services/api";
 import Filtro from "../../Components/Filtro";
@@ -11,6 +11,7 @@ import Filtro from "../../Components/Filtro";
 export default function AnimeFiltro() {
 
     const route = useRoute()
+    const navigation = useNavigation()
     const [generos, setGeneros] = useState()
 
     useEffect(() => {
@@ -22,6 +23,12 @@ export default function AnimeFiltro() {
 
         getFiltroAnime();
     }, [])
+
+    function Categorias(item) {
+
+        navigation.navigate("Categoria", { mal_id: item.mal_id })
+        console.log(item.mal_id)
+    }
 
 
     return (
@@ -35,7 +42,7 @@ export default function AnimeFiltro() {
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => String(item.mal_id)}
-                renderItem={({ item }) => <Filtro data={item} />}
+                renderItem={({ item }) => <Filtro data={item} navigatePagina={() => Categorias(item)} />}
             />
         </Container>
     )

@@ -4,6 +4,10 @@ import {
     Text,
 } from 'react-native'
 import api from '../../services/api'
+import Filtro from "../../Components/Filtro"
+
+import { Container, Nome, FlatGenres, Titulo } from "./styles";
+
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function Detalhes() {
@@ -18,7 +22,7 @@ export default function Detalhes() {
 
         let isActive = true
 
-        async function getAnimeFiltro() {
+        async function Categoria() {
             const response = await api.get(`/anime/${route.params?.mal_id}`,)
                 .catch((err) => {
                     console.log(err)
@@ -31,7 +35,7 @@ export default function Detalhes() {
         }
         if (isActive) {
 
-            getAnimeFiltro();
+            Categoria();
         }
         return () => {
             isActive = false
@@ -39,8 +43,15 @@ export default function Detalhes() {
     }, [])
 
     return (
-        <SafeAreaView>
-            <Text>dsadsadas</Text>
-        </SafeAreaView>
+        <Container>
+            <Nome>Categoria</Nome>
+            <FlatGenres
+                data={anime}
+                numColumns={3}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => String(item.mal_id)}
+                renderItem={({ item }) => <Filtro data={item}/>}
+            />
+        </Container>
     )
 }

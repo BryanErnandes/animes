@@ -12,6 +12,7 @@ import PersonagensMangas from "../Pages/PersonagensMangas";
 import Personagem from "../Pages/Personagem";
 import Search from "../Pages/Search";
 import AnimeFiltro from "../Pages/AnimeFiltro";
+import Categoria from "../Pages/Categoria"
 
 const Tab = createBottomTabNavigator()
 
@@ -44,6 +45,7 @@ export default function MarvelRoutes() {
                 },
                 headerTintColor: '#fff'
             }} />
+            <Stack.Screen name="Categoria" component={Categoria} options={{ headerShown: false}} />
             
         </Stack.Navigator>
     )

@@ -6,7 +6,7 @@ export default function Filtro({ data, navigatePagina }) {
 
     return (
         <Container>
-            <Banner onPress={() => alert('test')}>
+            <Banner activeOpacity={0.9} onPress={() => navigatePagina()}>
                 <Nome>{data.name}</Nome>
             </Banner>
         </Container>
