@@ -4,7 +4,7 @@ import {
     Text,
 } from 'react-native'
 import api from '../../services/api'
-import Filtro from "../../Components/Filtro"
+import CategoriaAnimes from '../../Components/CategoriasAnimes';
 
 import { Container, Nome, FlatGenres, Titulo } from "./styles";
 
@@ -14,24 +14,18 @@ export default function Detalhes() {
 
     const route = useRoute()
 
-    const navigation = useNavigation()
+    //const navigation = useNavigation()
 
-    const [anime, setAnime] = useState({});
+    const [anime, setAnime] = useState([]);
 
     useEffect(() => {
 
         let isActive = true
 
         async function Categoria() {
-            const response = await api.get(`/anime/${route.params?.mal_id}`,)
-                .catch((err) => {
-                    console.log(err)
-                })
-                
-                if (isActive) {
-                    setAnime(response.data.data);
-                    console.log(response.data)
-                }
+            const response = await api.get(`/genres/anime`,)
+            setAnime(response.data.data);
+            console.log(response.data.data)
         }
         if (isActive) {
 
@@ -44,13 +38,13 @@ export default function Detalhes() {
 
     return (
         <Container>
-            <Nome>Categoria</Nome>
+            <Nome>Categories</Nome>
             <FlatGenres
                 data={anime}
                 numColumns={3}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => String(item.mal_id)}
-                renderItem={({ item }) => <Filtro data={item}/>}
+                renderItem={({ item }) => <CategoriaAnimes data={item}/>}
             />
         </Container>
     )

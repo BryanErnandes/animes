@@ -6,7 +6,7 @@ import { Container, Topo, Botao, ContainerBanner, ImageBackground, Note, Nota, N
 
 import { FlatList, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import {mangasFavoritosSalvo, hasFavoritoManga, deleteManga,} from '../../Utils/estoqueManga'
+import { mangasFavoritosSalvo, hasFavoritoManga, deleteManga, } from '../../Utils/estoqueManga'
 
 
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -104,14 +104,14 @@ export default function MangasDetalhes() {
         <Container>
             <ScrollView>
                 <Topo>
-                    <HeaderAnimes title='Detalhes Manga' />
+                    <HeaderAnimes title='Mangá Details' />
                     <Botao activeOpacity={0.8} onPress={() => mangasFavoritos(manga)}>
-                    {favoritosMangas ? (
-                        <Entypo name="heart" size={39} color='#FA3800' />
-                    ) : (
-                        <Entypo name="heart-outlined" size={39} color='#FA3800' />
-                    )}
-                </Botao>
+                        {favoritosMangas ? (
+                            <Entypo name="heart" size={39} color='#FA3800' />
+                        ) : (
+                            <Entypo name="heart-outlined" size={39} color='#FA3800' />
+                        )}
+                    </Botao>
                 </Topo>
                 <ContainerBanner>
                     <ImageBackground
@@ -144,7 +144,7 @@ export default function MangasDetalhes() {
                 </TitleView>
 
                 <CharacterContainer >
-                        <CharactersTitle>Personagens</CharactersTitle>
+                    <CharactersTitle>Characters</CharactersTitle>
                     <CharacterView>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {characters?.map((character, index) => {
@@ -168,7 +168,7 @@ export default function MangasDetalhes() {
                 </CharacterContainer>
 
                 <VolumeContainer >
-                    <VolumeTitle>Fotos</VolumeTitle>
+                    <VolumeTitle>Photos</VolumeTitle>
 
                     <VolumeView >
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -195,12 +195,12 @@ export default function MangasDetalhes() {
                         }}>
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Tipo: {manga.type}</Text>
-                                <Text style={styles.modalText}>Capitulos: {manga.chapters}</Text>
+                                <Text style={styles.modalText}>Type: {manga.type}</Text>
+                                <Text style={styles.modalText}>Chapters: {manga.chapters}</Text>
                                 <Text style={styles.modalText}>Volumes: {manga.volumes}</Text>
                                 <Text style={styles.modalText}>Status: {manga.status}</Text>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.modalText}>Serializações: </Text>
+                                    <Text style={styles.modalText}>Serializations: </Text>
                                     <FlatList
                                         data={manga?.serializations}
                                         showsVerticalScrollIndicator={false}
@@ -208,7 +208,7 @@ export default function MangasDetalhes() {
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.modalText}>Autor: </Text>
+                                    <Text style={styles.modalText}>Author: </Text>
                                     <FlatList
                                         data={manga?.authors}
                                         showsVerticalScrollIndicator={false}
@@ -216,7 +216,7 @@ export default function MangasDetalhes() {
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.modalText}>Gêneros Explícitos: </Text>
+                                    <Text style={styles.modalText}>Explicit Genres: </Text>
                                     <FlatList
                                         data={manga?.explicit_genres}
                                         showsVerticalScrollIndicator={false}
@@ -224,7 +224,7 @@ export default function MangasDetalhes() {
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.modalText}>Temas: </Text>
+                                    <Text style={styles.modalText}>Themes: </Text>
                                     <FlatList
                                         data={manga?.themes}
                                         showsVerticalScrollIndicator={false}
@@ -232,7 +232,7 @@ export default function MangasDetalhes() {
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.modalText}>Demografia: </Text>
+                                    <Text style={styles.modalText}>Demography: </Text>
                                     <FlatList
                                         data={manga?.demographics}
                                         showsVerticalScrollIndicator={false}
@@ -251,7 +251,7 @@ export default function MangasDetalhes() {
                     <Pressable
                         style={[styles.button, styles.buttonOpen]}
                         onPress={() => setModalVisible(true)}>
-                        <Text style={styles.textStyle}>Mais Informações</Text>
+                        <Text style={styles.textStyle}>More information</Text>
                     </Pressable>
                 </View>
 

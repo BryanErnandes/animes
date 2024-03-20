@@ -10,7 +10,7 @@ background-color: rgba(0, 0, 0, 1)
 export const AnimeContainer = styled.View`
 `;
 
-export const FlatBanners = styled.FlatList`
+export const FlatPesquisa = styled.FlatList`
 margin-right: 1px;
 margin-left: 1px
 margin-bottom: 1px;

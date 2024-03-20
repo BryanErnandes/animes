@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
 import api from '../../services/api'
-import AnimeList from '../../Components/Pesquisa/animeList'
+import Pesquisa from "../../Components/Pesquisa"
+
 //import { View, Text, Image } from "react-native"
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { Container, Titulo, FlatPesquisa } from "./styles"
 
@@ -12,6 +13,7 @@ export default function Search() {
     //const navigation = useNavigation();
     const route = useRoute();
     const [animes, setAnimes] = useState([])
+    const navigation = useNavigation();
 
     useEffect(() => {
 
@@ -25,6 +27,8 @@ export default function Search() {
 
     }, [route.params?.name])
 
+            function navigateDetalhes(item) {navigation.navigate("AnimesDetalhes", {mal_id: item.mal_id})}
+
 
     return (
         <Container>
@@ -33,7 +37,7 @@ export default function Search() {
                 numColumns={3}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => String(item.mal_id)}
-                renderItem={({ item }) => <AnimeList data={item}/>}
+                renderItem={({ item }) => <Pesquisa data={item} navigatePagina={ () => navigateDetalhes(item)}/>}
             />
         </Container>
     )

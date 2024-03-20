@@ -15,6 +15,8 @@ margin: 18px 0px 27px 0px
 font-size: 25px
 color: #fff`;
 
-
+export const Botao = styled.TouchableOpacity`
+background-color: rgba(100, 200, 0, 1)
+`
 export const FlatGenres = styled.FlatList`
 `;

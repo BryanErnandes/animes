@@ -114,7 +114,7 @@ export default function AnimesDetalhes() {
         <Container>
             <ScrollView>
                 <Topo>
-                    <HeaderAnimes title="Detalhes Anime" />
+                    <HeaderAnimes title="Anime Details" />
                     <Botao activeOpacity={0.8} onPress={() => animesFavoritos(anime)}>
                         {favoritosAnimes ? (
                             <Entypo name="heart" size={39} color='#FA3800' />
@@ -155,7 +155,7 @@ export default function AnimesDetalhes() {
                     />
                 </Titulo>
                 <CharacterContainer >
-                    <CharactersTitle>Personagens</CharactersTitle>
+                    <CharactersTitle>Characters</CharactersTitle>
                     <CharacterView>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {characters?.map((character, index) => {
@@ -166,7 +166,7 @@ export default function AnimesDetalhes() {
                                             resizeMode="cover"
                                             src={images?.jpg.image_url} />
                                         <View>
-                                            <CharactersName>{name}</CharactersName>
+                                            <CharactersName numberOfLines={2}>{name}</CharactersName>
                                         </View>
 
                                     </BannerView>
@@ -177,7 +177,7 @@ export default function AnimesDetalhes() {
                 </CharacterContainer>
 
                 <EpisodeContainer >
-                    <EpisodesTitle>Episodios</EpisodesTitle>
+                    <EpisodesTitle>Episodes</EpisodesTitle>
                     <EpisodesView >
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {video.map(videos => (
@@ -208,15 +208,15 @@ export default function AnimesDetalhes() {
                         }}>
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Tipo: {anime.type}</Text>
-                                <Text style={styles.modalText}>Episodios: {anime.episodes}</Text>
-                                <Text style={styles.modalText}>Duração: {anime.duration}</Text>
-                                <Text style={styles.modalText}>Transmissão: {anime.season} {anime.year}</Text>
+                                <Text style={styles.modalText}>Type: {anime.type}</Text>
+                                <Text style={styles.modalText}>Episodes: {anime.episodes}</Text>
+                                <Text style={styles.modalText}>duration: {anime.duration}</Text>
+                                <Text style={styles.modalText}>Streaming: {anime.season} {anime.year}</Text>
                                 <Text style={styles.modalText}>Status: {anime.status}</Text>
-                                <Text style={styles.modalText}>Avaliação: {anime.rating}</Text>
-                                <Text style={styles.modalText}>Fonte: {anime.source}</Text>
+                                <Text style={styles.modalText}>Rating: {anime.rating}</Text>
+                                <Text style={styles.modalText}>source: {anime.source}</Text>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.flatListText}>Estudio:</Text>
+                                    <Text style={styles.flatListText}>Studio:</Text>
                                     <FlatList
                                         data={anime?.studios}
                                         showsVerticalScrollIndicator={false}
@@ -224,7 +224,7 @@ export default function AnimesDetalhes() {
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.flatListText}>Demografia:</Text>
+                                    <Text style={styles.flatListText}>Demography:</Text>
                                     <FlatList
                                         data={anime?.demographics}
                                         showsVerticalScrollIndicator={false}
@@ -232,7 +232,7 @@ export default function AnimesDetalhes() {
                                         renderItem={({ item }) => <Information data={item} />} />
                                 </View>
                                 <View style={styles.flatList}>
-                                    <Text style={styles.flatListText}>Temas:</Text>
+                                    <Text style={styles.flatListText}>Themes:</Text>
                                     <FlatList
                                         data={anime?.themes}
                                         showsVerticalScrollIndicator={false}
@@ -253,7 +253,7 @@ export default function AnimesDetalhes() {
                     <Pressable
                         style={[styles.button, styles.buttonOpen]}
                         onPress={() => setModalVisible(true)}>
-                        <Text style={styles.textStyle}>Mais Informações</Text>
+                        <Text style={styles.textStyle}>More information</Text>
                     </Pressable>
                 </View>
 

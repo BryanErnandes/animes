@@ -4,7 +4,7 @@ import { Container, BannerView, StatusView, NomeStatus, NomeView, Nome, BannerIm
 
 
 
-export default function AnimeList({ data, navigatePagina }) {
+export default function Pesquisa({ data, navigatePagina }) {
 
     return (
         <Container>

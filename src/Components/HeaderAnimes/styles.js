@@ -23,6 +23,6 @@ border-radius: 20px;
 
 export const Title = styled.Text`
 font-size: 40px;
-color: #33C8A9;
+color: #e91e63;
 font-weight: bold;
 `;

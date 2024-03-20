@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getFavoritosAnimes, deleteAnime } from "../../Utils/estoqueAnime";
 import { getFavoritosManga, deleteManga } from "../../Utils/estoqueManga";
 
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useIsFocused } from "@react-navigation/native"
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
 
@@ -17,6 +17,7 @@ export default function AnimesLogin() {
     const [mangas, setMangas] = useState([])
 
     const navigation = useNavigation();
+    const isFocused = useIsFocused()
 
     useEffect(() => {
         let isActive = true;
@@ -47,7 +48,7 @@ export default function AnimesLogin() {
         return () => {
             isActive = false
         }
-    }, [])
+    }, [isFocused])
 
     async function hanledDelete(mal_id) {
         const resultado = await deleteAnime(mal_id);
@@ -77,7 +78,7 @@ export default function AnimesLogin() {
                     <ImagePerfil
                         resizeMode="cover"
                         source={{
-                            uri: "https://static3.mangalivre.net/capas/5sW1GXOQtueQ7L6LYcAOkg/9712/62e6b4752d774_external_cover.jpg"
+                            uri: "https://t.ctcdn.com.br/3L7e0dfUxiKO8zUJcip-8fqcEJk=/1200x675/smart/i521738.jpeg"
                         }} />
                     <ImageView>
                         <PerfilImage
@@ -86,26 +87,29 @@ export default function AnimesLogin() {
                                 uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                             }} />
                         <TextPerfil>
-                            nome
+                            name
                         </TextPerfil>
                     </ImageView>
                 </PerfilView>
 
-
-
                 <AnimesContaine>
                     <AnimesText>
-                        Animes Favoritos
+                        Animes Favorites
                     </AnimesText>
+
+                    {anime.length === 0 && (
+                        <Title>You don't have any favorite anime</Title>
+                    )}
+
                     <AnimeView>
-                      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {anime.map(animes => (
                                 <AnimesView style={styles.shadow} key={animes.mal_id}>
                                     <Botao activeOpacity={0.8} onPress={() => hanledDelete(animes.mal_id)}>
                                         <Ionicons name="trash-bin" size={21} color='#fff' />
                                     </Botao>
                                     <ContainerFavoritos activeOpacity={0.9}>
-                                       <ImageBackground
+                                        <ImageBackground
                                             resizeMode="cover"
                                             source={{
                                                 uri: `${animes.images.jpg.image_url}`,
@@ -122,8 +126,13 @@ export default function AnimesLogin() {
 
                     <MangasContaine>
                         <AnimesText>
-                            Mangas Favoritos
+                            Mangá Favorites
                         </AnimesText>
+
+                        {mangas.length === 0 && (
+                            <Title>You don't have any favorite mangás</Title>
+                        )}
+
                         <AnimeView>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 {mangas.map(manga => (
@@ -132,11 +141,11 @@ export default function AnimesLogin() {
                                             <Ionicons name="trash-bin" size={21} color='#fff' />
                                         </Botao>
                                         <ContainerFavoritos activeOpacity={0.9} >
-                                        <ImageBackground
-                                            resizeMode="cover"
-                                            source={{
-                                                uri: `${manga.images.jpg.image_url}`,
-                                            }} />
+                                            <ImageBackground
+                                                resizeMode="cover"
+                                                source={{
+                                                    uri: `${manga.images.jpg.image_url}`,
+                                                }} />
 
                                             <FavoritosText>
                                                 <Title numberOfLines={1}>{manga.title}</Title>

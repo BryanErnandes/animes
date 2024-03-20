@@ -70,7 +70,7 @@ padding-start: 0px
 export const AnimesView = styled.View`
 border-width: 0px;
 height: 265px;
-width: 173px;
+width: 168px;
 margin-top: 0px;
 margin-left: 0px;
 margin-bottom: 10px;
@@ -125,4 +125,6 @@ padding-end: 9px;
 export const Title = styled.Text`
 color: #fff;
 font-size: 15px;
+margin-top: 5
+margin-start: 10px;
 font-weight: bold;`;

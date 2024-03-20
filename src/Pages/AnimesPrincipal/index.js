@@ -14,7 +14,7 @@ import Generos from "../../Components/Genres"
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 
 import { useNavigation } from "@react-navigation/native"
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+//import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 
 export default function AnimesPrincipal() {
@@ -111,12 +111,12 @@ export default function AnimesPrincipal() {
             <ScrollView showsVerticalScrollIndicator={false}>
 
                 <Topo>
-                    <HeaderAnimes title="Animes Lista" />
+                    <HeaderAnimes title="List Animes" />
                 </Topo>
 
                 <Seach>
                     <Input 
-                    placeholder="Buscar..."
+                    placeholder="Search"
                     placeholderTextColor='#5C5C5C' 
                     value={inputValor} 
                     onChangeText={ (text) => setInputValor(text)}/>
@@ -149,7 +149,7 @@ export default function AnimesPrincipal() {
 
                 </BannerBotao>
 
-                <Title>Temporada atual</Title>
+                <Title>Current season</Title>
 
                 <SliderLancamento
                     horizontal={true}
@@ -187,7 +187,7 @@ export default function AnimesPrincipal() {
                     keyExtractor={(item) => String(item.mal_id)}
                 />
 
-                <Title>Animes Populares</Title>
+                <Title>Popular Animes</Title>
 
                 <SlideAnime
                     horizontal={true}
@@ -198,7 +198,7 @@ export default function AnimesPrincipal() {
                 />
 
 
-                <Title>Mangás Populares</Title>
+                <Title>Popular Animes</Title>
 
                 <SlideAnime
                     horizontal={true}
